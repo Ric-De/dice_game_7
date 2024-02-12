@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Public routes of authentication using Passport
+Route::controller(ApiController::class)->group(function() {
+    Route::post('/players', 'register')/* ->name('user.register') */;
+    Route::post('/login', 'login')->name('user.login');
+});
+
+Route::middleware('auth:api')->group( function () {
+    Route::post('/logout', [ApiController::class, 'logout'])->name('user.logout');
 });
