@@ -43,4 +43,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    //One to many relationships
+    public function games(){
+        return $this->hasMany(Game::class);
+    }
 }
